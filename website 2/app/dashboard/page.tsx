@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AppShell from "@/components/layout/AppShell";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, type TooltipProps } from "recharts";
-import { MapPin, Droplets, Wind, TrendingUp, CloudRain, ClipboardList, MessageSquare, ScanSearch, Store, BrainCircuit, Loader2, RefreshCw, Activity } from "lucide-react";
+import { MapPin, Droplets, Wind, TrendingUp, CloudRain, ClipboardList, MessageSquare, ScanSearch, Store, BrainCircuit, Loader2, RefreshCw, Activity, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/firebase/auth-context";
 import { getUserActivityLogs, type ActivityLogEntry } from "@/lib/firebase/activity-log";
@@ -26,7 +26,7 @@ function ChartTooltip({ active, payload, label }: TooltipProps<number, string>) 
   return (
     <div className="bg-[#0d1a10] border border-[#2a3d2c] rounded-xl px-3 py-2 shadow-xl">
       <p className="text-[10px] text-[#5a7460] mb-1 font-medium">{label}</p>
-      {payload.map((p: import('recharts').Payload<number, string>) => (
+      {(payload as Array<{ name?: string; value?: number; color?: string }>).map((p) => (
         <p key={p.name} className="text-xs font-semibold" style={{ color: p.color }}>
           {p.name}: {p.value}{String(p.name).includes("Moisture") ? "%" : "mm"}
         </p>
@@ -35,7 +35,7 @@ function ChartTooltip({ active, payload, label }: TooltipProps<number, string>) 
   );
 }
 
-const ACT_ICONS: Record<string, React.FC<{ className?: string; strokeWidth?: number }>> = {
+const ACT_ICONS: Record<string, LucideIcon> = {
   pest_diagnosis: ScanSearch, chat_message: MessageSquare,
   crop_recommendation: BrainCircuit, market_query: TrendingUp,
   weather_check: CloudRain, scheme_search: ClipboardList, default: Activity,

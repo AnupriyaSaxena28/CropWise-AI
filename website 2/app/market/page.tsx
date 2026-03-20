@@ -203,7 +203,6 @@ function PriceTrendChart({ cropName, historical }: { cropName: string; historica
   const lastPrice  = prices[prices.length - 1];
   const avgGrowth  = (((lastPrice - firstPrice) / firstPrice) * 100).toFixed(1);
 
-  const activeCropData = prices.find((p) => p.cropName === cropName);
 
   return (
     <div className="rounded-xl bg-[#111d16] border border-[#2a3d2c] p-5 flex flex-col gap-4">

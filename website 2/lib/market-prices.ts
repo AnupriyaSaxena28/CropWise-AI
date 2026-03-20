@@ -26,7 +26,8 @@ const MSP_2024_25: Record<string, number> = {
 // ─── Fetch live mandi prices from data.gov.in ─────────────────────────────────
 
 export async function fetchMandiPrices(state?: string): Promise<MarketPrice[]> {
-  const apiKey = process.env.MARKET_API_KEY;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const apiKey = (globalThis as any).process?.env?.MARKET_API_KEY as string | undefined;
 
   if (apiKey) {
     try {
@@ -86,7 +87,8 @@ export async function fetchMandiPrices(state?: string): Promise<MarketPrice[]> {
 export async function fetchHistoricalPrices(
   cropName: string
 ): Promise<MarketHistoricalPoint[]> {
-  const apiKey = process.env.MARKET_API_KEY;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const apiKey = (globalThis as any).process?.env?.MARKET_API_KEY as string | undefined;
 
   if (apiKey) {
     try {

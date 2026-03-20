@@ -84,8 +84,8 @@ function ConditionIcon({ code, className }: { code: string; className?: string }
 
 function ChartTooltip({ active, payload, label }: TooltipProps<number, string>) {
   if (!active || !payload?.length) return null;
-  const temp = (payload as import("recharts").Payload<number,string>[]).find(p => p.dataKey === "temp")?.value;
-  const rain = (payload as import("recharts").Payload<number,string>[]).find(p => p.dataKey === "rain")?.value;
+  const temp = (payload as Array<{ dataKey: string; value: number; color?: string }>).find(p => p.dataKey === "temp")?.value;
+  const rain = (payload as Array<{ dataKey: string; value: number; color?: string }>).find(p => p.dataKey === "rain")?.value;
   return (
     <div className="bg-[#0d1a10] border border-[#2a3d2c] rounded-xl px-3 py-2.5 shadow-xl">
       <p className="text-[10px] text-[#5a7460] mb-1.5 font-medium">{label}</p>

@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users — sirf apna profile dekh/edit kar sakte hain
+    match /users/{userId} {
+      allow read, write: if request.auth != null 
+                         && request.auth.uid == userId;
+    }
+
+    // Activity logs — sirf apna data dekh sakte hain, write server se
+    match /activityLogs/{logId} {
+      allow read: if request.auth != null
+                  && resource.data.userId == request.auth.uid;
+      allow write: if false; // Only via Admin SDK (server-side)
+    }
+
+    // Chat history — apne sessions
+    match /chatHistory/{sessionId} {
+      allow read, write: if request.auth != null
+                         && resource.data.userId == request.auth.uid;
+      
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+  }
+}
